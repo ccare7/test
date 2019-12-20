@@ -22,4 +22,4 @@
             index.php  前台的入口文件
             admin.php  后台入口文件：header （'Location:admin/login.php'）跳转
              
-   
+   # test
