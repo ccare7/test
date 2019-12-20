@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <style>
+        .layui-table{
+            width: 98%;
+            text-align: center;
+        }
+        .layui-table tr th{
+            text-align: center;
+        }
+        input{
+            padding: 5px 0;
+            text-align: center;
+            outline: none;
+            border: none;
+        }
+        .head_tit{
+            font-size: 30px;
+            color: #0C0C0C;
+            font-weight: 600;
+            text-align: center;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <table class="layui-table"  lay-size="lg">
+        <div class="head_tit">导航栏内容修改</div>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>导航名称</th>
+            <th>导航排序</th>
+            <th>导航模块</th>
+            <th>导航图片</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+            <?php foreach($data as $v){ ?>
+                <tr id="<?php echo $v['nid'] ?>">
+                    <td><?php echo $v['nid']?></td>
+                    <td class="name"><input class="input" type="text" value="<?php echo $v['name'] ?>"></input></td>
+                    <td class="nsort"><input class="input" type="text" value="<?php echo $v['nsort'] ?>"></input></td>
+                    <td class="tmp"><input class="input" type="text" value="<?php echo $v['tmp'] ?>"></input></td>
+                    <td class="nthumb"><input class="input" type="text" value="<?php echo $v['nthumb'] ?>"></input></td>
+                    <td><input type="button" class="layui-btn  layui-btn-danger btn" value="删除"></input></td>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</body>
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    layui.use(['table','jquery','layer'],function () {
+        var {table,$,layer}=layui;
+        //修改
+
+        $('tbody').on('blur','.input',function () {
+            // console.log(1);
+            let nid=$(this).closest('tr').attr('id');
+            let name=$(this).closest('td').attr('class');
+            let val = $(this).val();
+            $.ajax({
+                url:'navupdate.php',
+                type:'post',
+                data:'nid='+nid+'&name='+name+"&val="+val,
+                dataType:'json',
+                success:function (res) {
+                    if(res.code==200){
+                        layer.msg(res.msg);
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                }
+            })
+        });
+        //删除
+        $('tbody').on('click','.btn',function () {
+            let nid=$(this).closest('tr').attr('id');
+            $.ajax({
+                type: 'get',
+                url:"navdelete.php?nid="+nid,
+                dataType: 'json',
+                success:function (res) {
+                    if(res.code==200){
+                        layer.msg(res.msg);
+                        $('#'+nid).remove();
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                }
+            })
+        })
+    })
+</script>

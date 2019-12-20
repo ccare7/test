@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/admin/css/navinsert.css">
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <title>导航栏</title>
+</head>
+<body>
+
+    <form class="layui-form" action="">
+        <div class="head_tit">导航栏添加</div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">导航名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" required  lay-verify="title" autocomplete="off" placeholder="请输导航名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">导航排序</label>
+            <div class="layui-input-block">
+                <input type="text" name="nsort" required  lay-verify="title" autocomplete="off" placeholder="请输入导航排序" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">导航模块</label>
+            <div class="layui-input-block">
+                <input type="text" name="tmp" required  lay-verify="title" autocomplete="off" placeholder="请输入导航模块" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">图片地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="nthumb" required  lay-verify="title" autocomplete="off" placeholder="请输图片地址" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-filter="*" lay-submit="" >立即提交</button>
+        </div>
+    </form>
+</body>
+
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    layui.use(['form','jquery','layer'],function () {
+        // var form = layui.form;
+        // var $ = layui .jquery;
+        var {form,$,layer}=layui;
+        form.on('submit(*)',function (data) {
+            $.ajax({
+                type:"post",
+                url:'navinsert.php',
+                data:data.field,
+                dataType:"json",
+                success:function (res) {
+                    if(res.code==200){
+                        layer.msg(res.msg);
+                        setTimeout(()=>{
+                            location.href='navinsert.php';
+                        },1000)
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                }
+            })
+            return false;
+        })
+    })
+</script>

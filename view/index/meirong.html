@@ -1,0 +1,70 @@
+
+		<link rel="stylesheet" type="text/css" href="../static/index/css/meirong.css" />
+	</head>
+
+		<style>
+			.fanhuiliebiao{
+				width: 98px;
+				height: 50px;
+				border: 3px solid #0C0C0C;
+				text-align: center;
+				line-height: 50px;
+				margin: 50px auto 0 auto;
+			}
+			.fanhuiliebiao:hover {
+				background: #0C0C0C;
+				color: #fff;
+			}
+		</style>
+	<body>
+		<!--导航-->
+
+
+		<!--内容-->
+		<div class="tp_img"><img src="../static/index/img/15142754004385aixtc.jpg" /></div>
+		<div class="con_fa_nk">
+			<p class="con_tit"><?php echo $data['ntitle'] ?></p>
+			<p class="con_tit_small">发布日期：<?php echo $data['update_time'] ?></p>
+			<p class="con">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $data['content'] ?>
+			</p>
+			<ul class="fenye">
+				<li>
+					<?php if($pre) {?>
+						<a href="newsdetail.php?nid=<?php echo $preId ?>">
+							<span>上一篇&nbsp;&nbsp;&nbsp;&nbsp;</span>
+							<span><?php echo $preTitle ?></span>
+						</a>
+					<?php }else{ ?>
+					<a href="javascript:;">
+						<span>上一篇&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span>没有了</span>
+					</a>
+					<?php } ?>
+				</li>
+				<li>
+					<?php if($next) { ?>
+						<a href="newsdetail.php?nid=<?php echo $nextId ?>">
+							<span>下一篇&nbsp;&nbsp;&nbsp;&nbsp;</span>
+							<span><?php echo $nextTitle ?></span>
+						</a>
+					<?php }else{ ?>
+						<span>下一篇&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span>没有了</span>
+					<?php } ?>
+
+				</li>
+			</ul>
+			<a href="navigator.php?page_id=18"><div class="fanhuiliebiao">返回列表</div></a>
+		</div>
+		<!--返回顶部-->
+
+		<!--站点地图-->
+
+		<script src="../static/index/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>	
+	<script src="../static/index/js/public.js" type="text/javascript" charset="utf-8"></script>
+	
+
+	</body>
+
+</html>

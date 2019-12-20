@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>产品分类</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <style>
+        .box{
+            width: 80%;
+            margin: 0 auto;
+        }
+        .tit{
+            font-size: 30px;
+            color: #0C0C0C;
+            font-weight: 600;
+            text-align: center;
+            margin: 20px auto;
+        }
+        #editForm{
+            display: none;
+            margin-top: 20px;
+            padding-right: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <p class="tit">门店地址管理</p>
+    <table class="layui-hide" id="demo"></table>
+    <script type="text/html" id="options">
+        <button type="button" class="layui-btn layui-btn-xs" onclick="edits({{d.aid}})"><i class="layui-icon"></i></button>
+        <button type="button" class="layui-btn layui-btn-xs layui-btn-danger"><i class="layui-icon" onclick="det({{d.aid}})"></i></button>
+    </script>
+</div>
+<form class="layui-form" action="" id="editForm">
+    <input type="hidden" name="aid" required  lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+    <div class="layui-form-item">
+        <label class="layui-form-label">请输入分店</label>
+        <div class="layui-input-block">
+            <input type="text" name="store" required  lay-verify="title" autocomplete="off" placeholder="请输入分店" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">请输入分店地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="addr" required  lay-verify="title" autocomplete="off" placeholder="请输入分店地址" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">电话</label>
+        <div class="layui-input-block">
+            <input type="text" name="tel" required  lay-verify="title" autocomplete="off" placeholder="请输入门店电话" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">周内营业时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="time1" required  lay-verify="title" autocomplete="off" placeholder="周内营业时间" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">周末营业时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="time2" required  lay-verify="title" autocomplete="off" placeholder="周末营业时间" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text" name="asort" required  lay-verify="title" autocomplete="off" placeholder="排序" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-input-block">
+        <button type="submit" class="layui-btn" lay-filter="demo1" lay-submit="" >提交</button>
+    </div>
+
+</form>
+</body>
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    var $;
+    var layer;
+    var form , table;
+    var index , delIndex;
+    layui.use(['table', 'jquery','layer','form'],function(){
+        table = layui.table;
+        layer=layui.layer;
+        $=layui.jquery;
+        form=layui.form;
+        //展示已知数据
+        table.render({
+            elem: '#demo'
+            ,url:"address.php?type=querys"
+            ,cols: [[ // 标题栏
+                {field: 'aid', title: 'ID', sort: true}
+                ,{field: 'store', title: '分店'}
+                ,{field: 'addr', title: '分店地址'}
+                ,{field: 'time1', title: '周内营业时间'}
+                ,{field: 'time2', title: '周末营业时间'}
+                ,{field: 'tel', title: '电话'}
+                ,{field: 'asort', title: '排序'}
+                ,{title: '操作',templet:'#options'}
+            ]]
+            // ,skin: 'line' //表格风格
+            // ,even: true
+            ,page: true //是否显示分页
+            ,limits: [5, 10, 15]
+            ,limit: 5 //每页默认显示的数量
+        });
+        //修改数据
+        form.on('submit(demo1)',function (data) {
+            $.post("address.php?type=edit",data.field,function (res) {
+                let data=JSON.parse(res);
+                if(data.code==200){
+                    layer.close(index);
+                    layer.msg(data.msg,{icon:6});
+                    table.reload('demo');
+                }else{
+                    layer.msg(data.msg,{icon:5})
+                }
+            });
+            return false;
+        })
+    });
+    //点击编辑按钮
+    function edits(aid) {
+        index=layer.open({
+            type:1,
+            title:'修改产品分类',
+            area:['400px','500px'],
+            skin:'layui-layer-molv',
+            content:$('#editForm'),
+        })
+        // console.log(tid);
+        $.get("address.php?type=query",{aid:aid},function (res) {
+            var data=JSON.parse(res);
+            if(data.code==200){
+                $("input[name='aid']").val(data.data.aid);
+                $("input[name='store']").val(data.data.store);
+                $("input[name='addr']").val(data.data.addr);
+                $("input[name='time1']").val(data.data.time1);
+                $("input[name='time2']").val(data.data.time2);
+                $("input[name='tel']").val(data.data.tel);
+                $("input[name='asort']").val(data.data.asort);
+            }else{
+                layer.msg(data.msg);
+            }
+        })
+    }
+    //点击删除按钮
+    function det(aid) {
+        delIndex=layer.confirm('您确定要删除么？',{
+            title:'删除',
+            skin:'layui-layer-molv',
+            btn:['确认','取消']
+        },function () {
+            $.get("address.php?type=delete",{aid:aid},function (res) {
+                let data=JSON.parse(res);
+                if(data.code==200){
+                    layer.close(delIndex);
+                    layer.msg(data.msg,{icon:1});
+                    table.reload('demo');
+                }else{
+                    layer.msg(data.msg,{icon:2})
+                }
+            })
+        },function () {
+            layer.close(delIndex);
+        })
+    }
+
+</script>

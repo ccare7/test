@@ -1,0 +1,151 @@
+<?php
+	$abouts=$mysqli->query("select * from aboutus where cid=1")->fetch_assoc();
+?>
+		<link rel="stylesheet" type="text/css" href="../static/index/css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="../static/index/css/index.css" />
+		<style>
+			html,
+			body {
+				position: relative;
+				height: 100%;
+			}
+			
+			body {
+				 
+				font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+				font-size: 14px;
+				color: #000;
+				margin: 0;
+				padding: 0;
+			}
+			
+			.swiper-container {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-slide {
+				text-align: center;
+				font-size: 18px;
+				background: #fff;
+				/* Center slide text vertically */
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!--轮播-->
+		<div class="banner">	
+		<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<img  class="swiper-slide" src="../static/index/img/15227352124256q24mz.jpg" />
+		</div>
+				
+			<!-- Add Pagination -->
+			<div class="swiper-pagination"></div>
+			<!-- Add Arrows -->
+			<div class="swiper-button-next fenye1"></div>
+			<div class="swiper-button-prev fenye"></div>
+		</div>
+		</div> 
+		<!--内容-->
+
+		<div class="con_fa_nk">
+			<div class="tit1">
+				<span style="font-family: 微软雅黑; font-size:36px; color: #3e3e3e;">我们的努力，只是为了您的满意</span><br />
+				<p style="font-family: 微软雅黑体; margin-top: 19px; color: #808080;">我们为您提供集汽车内外装饰、汽车影音改装、汽车精品销售、汽车美容养护于一体的大型“一站式汽车服务”</p>
+			</div>
+			<ul class="con_fa">
+				<li class="bar-ce-left">
+					<img src="../static/index/img/aHR0cDovLzU0ZDRhMDMzOTQ4OWQudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNC8wNi84NjA4YTRjYmJhNjYyZjFiOWM1ZTZlOWYyMWJlMzlkZS5wbmc_p_p100_p_3D.png" />
+					<p style="color: #FF6000; font-size: 16px;">球鞋保养 潮流指南</p>
+					<img src="../static/index/img/aHR0cDovLzU0ZDRhMDMzOTQ4OWQudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNC8wNi9MSU5FLTE4MngxLnBuZw_p_p100_p_3D_p_p100_p_3D.png" />
+					<p class="con_fa_wen">応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换。</p>
+				</li>
+				<li class="bar-ce-left">
+					<img src="../static/index/img/aHR0cDovLzU0ZDRhMDMzOTQ4OWQudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNC8wNi8wNjc5MzIxMTg1MmZmYmE5ZGUwY2NlY2FhZDIwZDk3ZC5wbmc_p_p100_p_3D.png" />
+					<p style="color: #FF6000; font-size: 16px;">原厂品质 包退包换</p>
+					<img src="../static/index/img/aHR0cDovLzU0ZDRhMDMzOTQ4OWQudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNC8wNi9MSU5FLTE4MngxLnBuZw_p_p100_p_3D_p_p100_p_3D.png" />
+					<p class="con_fa_wen">応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换。</p>
+				</li>
+				<li class="bar-ce-left">
+					<img src="../static/index/img/aHR0cDovLzU0ZDRhMDMzOTQ4OWQudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNC8wNi9hMDE1ZmE2NjI0NjQxYzJmZTNhYjExOTRlZTdmMjg0ZC5wbmc_p_p100_p_3D.png" />
+					<p style="color: #FF6000; font-size: 16px;">加入会员 受益终身</p>
+					<img src="../static/index/img/aHR0cDovLzU0ZDRhMDMzOTQ4OWQudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNC8wNi9MSU5FLTE4MngxLnBuZw_p_p100_p_3D_p_p100_p_3D.png" />
+					<p class="con_fa_wen">応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换。</p>
+				</li>
+				<li class="bar-ce-left">
+					<img src="../static/index/img/aHR0cDovLzU0ZDRhMDMzOTQ4OWQudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNC8wNi9mN2E4ZTRmMjJjMTQwYTEzM2YxNTgxYzI0YzRhZDhjYy5wbmc_p_p100_p_3D.png" />
+					<p style="color: #FF6000; font-size: 16px;">制作精心 优惠多多</p>
+					<img src="../static/index/img/aHR0cDovLzU0ZDRhMDMzOTQ4OWQudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNC8wNi9MSU5FLTE4MngxLnBuZw_p_p100_p_3D_p_p100_p_3D.png" />
+					<p class="con_fa_wen">応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换。</p>
+				</li>
+			</ul>
+			<div class="tit2">
+				<span>引领时代，驾驭未来</span>
+			</div>
+			<img src="../static/index/img/aHR0cDovLzU0ZDRhMDMzOTQ4OWQudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNC8wNi8wMjUwODI0XzEyXzkzN2NiNjBlLTA2Y2ItNDBiNS1iNzUzLTYwYmM1NmNiNmY5N19yZXNpemVfcGljdHVyZS0xMDAweDc0LnBuZw_p_p100_p_3D_p_p100_p_3D.png" class="tit2_img" />
+
+			<div class="con2">
+				<img src="../static/index/img/15142774543107q5ftx.jpg" />
+				<ul class="jieshao">
+					<li class="jieshao1">
+						<span>
+							公司简介
+						</span>
+						<span>
+							MORE+
+						</span>
+					</li>
+					<li class="jieshao2"><?php echo $abouts['content'] ?></li>
+				</ul>
+			</div>
+			<div class="con3">
+
+				<img src="../static/index/img/15142774543107q5ftx.jpg" />
+				<div class="con3_tit">
+					<span>
+						美容知识
+					</span>
+					<span>
+						MORE+
+					</span>
+				</div>
+
+				<ul class="con3_nr">
+					<li>
+						<a href="yanghu.html">修车五大禁忌忌开锅时贸然开引擎盖</a>
+						<span>2015-01-02</span>
+					</li>
+					<li><a href="yanghu.html">修车五大禁忌忌开锅时贸然开引擎盖</a>
+						<span>2015-01-02</span></li>
+					<li><a href="yanghu.html">修车五大禁忌忌开锅时贸然开引擎盖</a>
+						<span>2015-01-02</span></li>
+					<li><a href="yanghu.html">修车五大禁忌忌开锅时贸然开引擎盖</a>
+						<span>2015-01-02</span></li>
+					<li><a href="yanghu.html">修车五大禁忌忌开锅时贸然开引擎盖</a>
+						<span>2015-01-02</span></li>
+				</ul>
+
+			</div>
+
+		</div>
+
+
+		<script src="../static/index/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/index/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/index/js/index.js" type="text/javascript" charset="utf-8"></script>
+			

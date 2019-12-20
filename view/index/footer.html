@@ -1,0 +1,28 @@
+
+<!--站点地图-->
+<div class="zd_fa">
+    <div class="zd_nk">
+        <?php foreach($addr as $v) {?>
+            <ul class="zd_con diyi">
+                <li><?php echo $v['store']?></li>
+                <li>门店地址：<?php echo $v['addr']?> </li>
+                <li>预约电话：<span><?php echo $v['tel']?></span> </li>
+                <li>营业时间：</li>
+                <li>周一 ~周五：<?php echo $v['time1']?></li>
+                <li>周六、周日：<?php echo $v['time2']?></li>
+            </ul>
+        <?php }?>
+
+
+    </div>
+    <ul class="zd_jlt">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="zd_last">版权所有 2019-2020 汽车美容工作室 技术支持：起飞页</div>
+</div>
+</body>
+</html>

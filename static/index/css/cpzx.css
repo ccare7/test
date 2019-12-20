@@ -1,0 +1,77 @@
+@import url("public.css");
+
+.tit1{
+	width: 1024px;
+	margin: 0 auto;
+	text-align: center; 
+	margin-top: 46px;
+}
+.con_fa_nk{
+	width: 1024px;
+	height: auto;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.tp{
+	width: 97%;
+	height: 272.56px;
+	margin: 15px;
+}
+.tp img{
+	width: 100%;
+	height: 100%;
+}
+
+.con_list{
+	font-size: 16px;
+	color: #F0443A;
+	margin-left: 52px;
+	overflow: auto;
+}
+.con_list li{
+	float: left;
+	margin-right: 10px;
+	margin-left: 10px;
+	box-sizing: border-box;
+	overflow: auto;
+}
+.neirong{
+	margin: 0 auto;
+	width: 936px;
+	height: auto;
+	display:none;
+}
+.neirong div{
+	width: 212px;
+	height: 212px;
+	overflow: hidden;
+	margin: 10px;
+	border: 1px solid #808080;
+}
+.neirong div img{
+	width: 98%;
+	height: 96%;
+	margin-top: 2%;
+}
+.neirong li {
+	float: left;
+	height: auto;
+	overflow: auto;
+	color: #373A41;
+	text-align: center;
+	font-size: 15px;
+	font-weight: 600;
+}
+.neirong li:hover{
+	color: #67C0CE;
+}
+.con_list li:hover{
+	border-bottom: 1px dashed #F66000;
+}
+.xxk{
+	border-bottom: 1px dashed #F66000;
+}
+
+/*.nr_2 ,.nr_3 ,.nr_4{
+	display: none;
+}*/

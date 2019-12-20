@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/admin/css/navinsert.css">
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <title>Document</title>
+    <style>
+        .layui-upload-img{
+            width: 160px;
+        }
+    </style>
+</head>
+<body>
+
+<form class="layui-form" action="">
+    <div class="head_tit">产品详情</div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品分类</label>
+        <div class="layui-input-block">
+
+            <select name="cid" lay-verify="">
+                <?php foreach($category as $v){ ?>
+                    <option value="<?php echo $v['cid']?>"><?php echo $v['cname']?></option>
+                <?php }  ?>
+            </select>
+
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品名称</label>
+        <div class="layui-input-block">
+
+            <input type="text" name="gname" required  lay-verify="title" autocomplete="off" placeholder="请输产品名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">上架/下架</label>
+        <div class="layui-input-block">
+            <input type="radio" name="status" value="0" title="上架" checked>
+            <input type="radio" name="status" value="1" title="下架" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品原价</label>
+        <div class="layui-input-block">
+
+            <input type="text" name="original_price" required  lay-verify="title" autocomplete="off" placeholder="请输入产品原价" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品缩略图</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <input type="hidden" name="gthumb" value="">
+                <button type="button" class="layui-btn" id="test1">上传图片</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="imgurl">
+                    <p id="demoText"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品轮播图</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <input type="hidden" name="gbanner" value="">
+                <button type="button" class="layui-btn" id="test2">多图片上传</button>
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo2"></div>
+                </blockquote>
+            </div>
+        </div>
+
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品折扣价</label>
+        <div class="layui-input-block">
+            <input type="text" name="discoun_price" required  lay-verify="title" autocomplete="off" placeholder="请输入产品原价" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品库存</label>
+        <div class="layui-input-block">
+            <input type="text" name="stock" required  lay-verify="title" autocomplete="off" placeholder="请输入产品库存" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品详情</label>
+        <div class="layui-input-block">
+            <textarea name="content" placeholder="请输入商品排序" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+
+    <div class="layui-input-block">
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+    </div>
+</form>
+</body>
+
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    var layer;
+    layui.use(['form','jquery','layer','upload'],function () {
+        var {form,$,layer,upload}=layui;
+
+        upload.render({
+            elem:'#test1',
+            url:'upload.php',
+            done:function (res) {
+                if(res.code==200){
+                    layer.msg(res.msg,{icon:1});
+                    $("input[name='gthumb']").val(res.data);
+                    $("#imgurl").attr('src',"../"+res.data);
+                }else{
+                    layer.msg(res.msg,{icon:2})
+                }
+            }
+
+        });
+        upload.render({
+            elem:'#test2',
+            url: 'upload.php',
+            multiple:true,
+            number:3,
+            done:function (res) {
+                // console.log(res)
+                if(res.code==200){
+                    layer.msg(res.msg);
+                    if($('#demo2 img').length<3){
+                        $("input[name='gbanner']").val((index,value)=>value+res.data+",");
+                        $("#demo2").append(`<img src="../${res.data}" style="width:160px;">`);
+                    }else{
+                        layer.msg('图片最多只能上传3张',{icon:2});
+                    }
+                }else{
+                    layer.msg(res.msg);
+                }
+            }
+        });
+        form.on('submit(demo1)',function (data) {
+            let formdata=data.field;
+            formdata.gbanner=formdata.gbanner.slice(0,-1);
+            // console.log(formdata);
+            $.ajax({
+                type:'post',
+                url:"goodsinsert.php",
+                data:formdata,
+                dataType:"json",
+                success:function (res) {
+                    // console.log(1);
+                    // console.log(res.code);
+                    if(res.code==200){
+                        // console.log(res.msg);
+                        layer.msg(res.msg);
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                }
+            });
+        })
+        return false;
+    })
+</script>

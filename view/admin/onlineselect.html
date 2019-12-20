@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>产品分类</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <style>
+        .box{
+            width: 80%;
+            margin: 0 auto;
+        }
+        .tit{
+            font-size: 30px;
+            color: #0C0C0C;
+            font-weight: 600;
+            text-align: center;
+            margin: 20px auto;
+        }
+        #editForm{
+            display: none;
+            margin-top: 20px;
+            padding-right: 40px;
+        }
+        .layui-table tbody{
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <p class="tit">在线预约内容</p>
+    <table class="layui-hide" id="demo"></table>
+</div>
+
+</body>
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    var $;
+    var layer;
+    var form , table;
+    var index , delIndex;
+    layui.use(['table', 'jquery','layer','form'],function(){
+        table = layui.table;
+        layer=layui.layer;
+        $=layui.jquery;
+        form=layui.form;
+        //展示已知数据
+        table.render({
+            elem: '#demo'
+            ,url:"online.php"
+            ,cols: [[ // 标题栏
+                {field: 'oid', title: 'ID', sort: true ,fixed:'left'}
+                ,{field: 'sid', title: '服务分类'}
+                ,{field: 'date', title: '预约日期'}
+                ,{field: 'sname', title: '服务名称'}
+                ,{field: 'sex', title: '用户性别'}
+                ,{field: 'tel', title: '用户电话'}
+                ,{field: 'note', title: '用户备注'}
+            ]]
+
+            // ,skin: 'line' //表格风格
+            // ,even: true
+            ,page: true //是否显示分页
+            ,limits: [5, 10, 15]
+            ,limit: 5 //每页默认显示的数量
+        });
+        return false;
+    });
+</script>

@@ -1,0 +1,45 @@
+<?php
+ 	$team=$mysqli->query("select * from team limit 4")->fetch_all(MYSQLI_ASSOC);
+	$abouts=$mysqli->query("select * from aboutus where cid=1")->fetch_assoc();
+?>
+<link rel="stylesheet" type="text/css" href="../static/index/css/gywm.css" />
+<div class="con_fa_nk">
+	<div class="tp">
+		<img src="../static/index/img/15142787516637063ru.jpg" />
+	</div>
+	<div class="biaoti1">
+		<span class="us1">关于我们</span>
+		<span class="us2">About Us</span>
+	</div>
+
+	<div class="neirong">
+		<img src="../static/index/img/lab.jpg" />
+		<div class="nr_wz">
+		<?php echo $abouts['content'] ?>
+		</div>
+	</div>
+	<div class="biaoti1">
+		<span class="us1">各司其职</span>
+		<span class="us2">Master&nbsp;&nbsp;Team</span>
+	</div>
+
+	<ul class="neirong2">
+		<?php foreach($team as $v) { ?>
+			<li>
+				<div class="box">
+					<img src="../<?php echo $v['head_img']?>" />
+				</div>
+				<p><?php echo $v['tname']?></p>
+				<span><?php echo $v['position']?></span>
+			</li>
+		<?php } ?>
+
+
+	</ul>
+</div>
+<!--返回顶部-->
+
+<script src="../static/index/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/index/js/index.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/index/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/index/js/public.js" type="text/javascript" charset="utf-8"></script>

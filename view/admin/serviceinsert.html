@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/admin/css/navinsert.css">
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <title>Document</title>
+    <style>
+        .layui-upload-img{
+            width: 160px;
+        }
+    </style>
+</head>
+<body>
+
+<form class="layui-form" action="">
+    <div class="head_tit">服务项目管理</div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">服务项目名称</label>
+        <div class="layui-input-block">
+
+            <input type="text" name="sname" required  lay-verify="title" autocomplete="off" placeholder="请输服务项目名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">务项目内容</label>
+        <div class="layui-input-block">
+            <input type="text" name="content" required  lay-verify="title" autocomplete="off" placeholder="请输服务项目内容" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">服务项目排序</label>
+        <div class="layui-input-block">
+            <input type="text" name="sort" required  lay-verify="title" autocomplete="off" placeholder="请输服务项目排序" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">服务项目缩略图</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <input type="hidden" name="sthumb" value="">
+                <button type="button" class="layui-btn" id="test1">上传服务项目图片</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="imgurl">
+                    <p id="demoText"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-input-block">
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+    </div>
+</form>
+</body>
+
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    layui.use(['form','jquery','layer','upload'],function () {
+        var {form,$,layer,upload}=layui;
+        upload.render({
+            elem:'#test1',
+            url:'upload.php',
+            done:function (res) {
+                if(res.code==200){
+                    layer.msg(res.msg,{icon:1});
+                    $("input[name='sthumb']").val(res.data);
+                    $("#imgurl").attr('src',"../"+res.data);
+                }else{
+                    layer.msg(res.msg,{icon:2})
+                }
+            }
+
+        });
+
+        form.on('submit(demo1)',function (data) {
+            $.ajax({
+                type:'post',
+                url:"serviceinsert.php",
+                data:data.field,
+                dataType:"json",
+                success:function (res) {
+                    if(res==200){
+                        layer.msg(res.msg);
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                }
+            });
+        })
+
+    })
+</script>

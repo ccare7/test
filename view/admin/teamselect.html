@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>产品分类</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <style>
+        .box{
+            width: 80%;
+            margin: 0 auto;
+        }
+        .tit{
+            font-size: 30px;
+            color: #0C0C0C;
+            font-weight: 600;
+            text-align: center;
+            margin: 20px auto;
+        }
+        #editForm{
+            display: none;
+            margin-top: 20px;
+            padding-right: 40px;
+        }
+        .layui-table-view .layui-table td {
+            cursor: default;
+            height: 100px;
+        }
+        .layui-table-cell {
+            height: 85px;
+            line-height: 85px;
+            padding: 0 15px;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .layui-upload-list {
+            margin: 10px 0 0 0;
+            height: 55px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <p class="tit">团队管理</p>
+    <table class="layui-hide" id="demo"></table>
+    <script type="text/html" id="options">
+        <button type="button" class="layui-btn layui-btn-xs" onclick="edits({{d.tid}})"><i class="layui-icon"></i></button>
+        <button type="button" class="layui-btn layui-btn-xs layui-btn-danger"><i class="layui-icon" onclick="det({{d.tid}})"></i></button>
+    </script>
+</div>
+<form class="layui-form" action="" id="editForm">
+    <input type="hidden" name="tid" required  lay-verify="title" autocomplete="off" placeholder="请输入商品排序" class="layui-input">
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="tname" required  lay-verify="title" autocomplete="off" placeholder="请输商品名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">职位</label>
+        <div class="layui-input-block">
+            <input type="text" name="position" required  lay-verify="title" autocomplete="off" placeholder="请输入商品排序" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">人物头像</label>
+        <div class="layui-input-block">
+            <input type="hidden" name="head_img" required  lay-verify="title" autocomplete="off" placeholder="请输入商品排序" class="layui-input">
+            <div class="layui-upload-list">
+                <img class="layui-upload-img" id="imgurl" width="100px">
+                <p id="demoText"></p>
+            </div>
+        </div>
+    </div>
+    <div class="layui-input-block">
+        <button type="submit" class="layui-btn" lay-filter="demo1" lay-submit="" >提交</button>
+    </div>
+
+</form>
+</body>
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    var $;
+    var layer;
+    var form , table;
+    var index , delIndex;
+    layui.use(['table', 'jquery','layer','form'],function(){
+        table = layui.table;
+        layer=layui.layer;
+        $=layui.jquery;
+        form=layui.form;
+        //展示已知数据
+        table.render({
+            elem: '#demo'
+            ,url:"team.php?type=querys"
+            ,cols: [[ // 标题栏
+                {field: 'tid', title: 'ID', sort: true}
+                ,{field: 'tname', title: '姓名'}
+                ,{field: 'position', title: '职位'}
+                ,{field: 'head_img', title: '人物头像',templet:function (d) {
+                       return `<img src="../${d.head_img}" height="85px">`
+                    }}
+                ,{title: '操作',templet:'#options'}
+            ]]
+            // ,skin: 'line' //表格风格
+            // ,even: true
+            ,page: true //是否显示分页
+            ,limits: [5, 10, 15]
+            ,limit: 5 //每页默认显示的数量
+        });
+        //修改数据
+        form.on('submit(demo1)',function (data) {
+            $.post("team.php?type=edit",data.field,function (res) {
+                let data=JSON.parse(res);
+                if(data.code==200){
+                    layer.close(index);
+                    layer.msg(data.msg,{icon:6});
+                    table.reload('demo');
+                }else{
+                    layer.msg(data.msg,{icon:5})
+                }
+            });
+            return false;
+        })
+    });
+    //点击编辑按钮
+    function edits(tid) {
+        index=layer.open({
+            type:1,
+            title:'修改产品分类',
+            area:['400px','300px'],
+            skin:'layui-layer-molv',
+            content:$('#editForm'),
+        })
+        // console.log(tid);
+        $.get("team.php?type=query",{tid:tid},function (res) {
+            var data=JSON.parse(res);
+            if(data.code==200){
+                $("input[name='tid']").val(data.data.tid);
+                $("input[name='tname']").val(data.data.tname);
+                $("input[name='position']").val(data.data.position);
+                $("input[name='head_img']").val(data.data.head_img);
+                $("#imgurl").attr('src',"../"+data.data.head_img);
+            }else{
+                layer.msg(data.msg);
+            }
+        })
+    }
+    //点击删除按钮
+    function det(tid) {
+        delIndex=layer.confirm('您确定要删除么？',{
+            title:'删除',
+            skin:'layui-layer-molv',
+            btn:['确认','取消']
+        },function () {
+            $.get("team.php?type=delete",{tid:tid},function (res) {
+                let data=JSON.parse(res);
+                if(data.code==200){
+                    layer.close(delIndex);
+                    layer.msg(data.msg,{icon:1});
+                    table.reload('demo');
+                }else{
+                    layer.msg(data.msg,{icon:2})
+                }
+            })
+        },function () {
+            layer.close(delIndex);
+        })
+    }
+
+</script>

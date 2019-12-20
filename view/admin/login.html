@@ -1,0 +1,67 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/admin/css/login.css">
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="login_fa">
+        <form class="layui-form">
+            <div class="dl_logo">
+                <span>登录</span>
+            </div>
+            <div class="shuru1">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="username" required  lay-verify="required|username" placeholder="请输入用户名" required  class="layui-input">
+            </div>
+            </div>
+            <div class="shuru2">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" required  lay-verify="required|password" placeholder="请输入密码" required  class="layui-input">
+            </div>
+            </div>
+            <div class="btn">
+                <button type="button" class="layui-btn " lay-filter="*" lay-submit >登录</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+<script src="../static/layui/layui.js"></script>
+<script type="text/javascript">
+
+    layui.use(['form','jquery','layer'], function(){
+        var {form,$,layer}=layui;
+        //监听提交
+        form.on('submit(*)', function(data){
+           $.ajax({
+               type:'post',
+               url:"login.php",
+               data:data.field,
+               dataType:"json",
+               success:function (res) {
+                    if(res.code==200){
+                        layer.msg(res.msg);
+                        setTimeout(function () {
+                            location.href="main.php"
+                        },1000)
+                    }else{
+                        layer.msg(res.msg);
+                    }
+               }
+
+           })
+            return false;
+        });
+
+    });
+
+</script>

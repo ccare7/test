@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/admin/css/navinsert.css">
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <title>Document</title>
+    <style>
+        .layui-upload-img{
+            width: 160px;
+        }
+    </style>
+</head>
+<body>
+
+<form class="layui-form" action="">
+    <div class="head_tit">门店地址管理</div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">分店名称</label>
+        <div class="layui-input-block">
+
+            <input type="text" name="store" required  lay-verify="title" autocomplete="off" placeholder="请输入分店名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="addr" required  lay-verify="title" autocomplete="off" placeholder="请输入地址" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系电话请</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <input type="text" name="tel" required  lay-verify="title" autocomplete="off" placeholder="其输入联系电话请" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">周内营业时间</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <input type="text" name="time1" required  lay-verify="title" autocomplete="off" placeholder="请输周内营业时间" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">周末营业时间</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <input type="text" name="time2" required  lay-verify="title" autocomplete="off" placeholder="请输周末营业时间" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <input type="text" name="asort" required  lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-input-block">
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+    </div>
+</form>
+</body>
+
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    layui.use(['form','jquery','layer','upload'],function () {
+        var {form,$,layer,upload}=layui;
+
+
+        form.on('submit(demo1)',function (data) {
+            $.ajax({
+                type:'post',
+                url:"addressinsert.php",
+                data:data.field,
+                dataType:"json",
+                success:function (res) {
+                    if(res==200){
+                        layer.msg(res.msg);
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                }
+            });
+        })
+
+    })
+</script>

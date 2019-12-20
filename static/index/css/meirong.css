@@ -1,0 +1,50 @@
+@import url("public.css");
+.tp_img{
+	width: 100%;
+	height: 270px;
+	overflow: hidden;
+}
+.tp_img img{
+	display: block;
+	width: 100%;
+	margin-top: -304px;
+}
+.con{
+	width: 974px;
+	color: #3E3E3E;
+	font-size: 14px;
+	margin: 50px auto;
+}
+.con_tit{
+	color: #000;
+	font-size: 32px;
+	margin-top: 50px;
+	text-align: center;
+}
+.con_fa_nk{
+	width: 1024px;
+	height: auto;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.con_tit_small{
+	color: #878787;
+	font-size: 14px;
+	margin-top: 10px;
+	text-align: center;
+}
+.fenye{
+	color: #F0443A;
+	font-size: 14px;
+	padding: 0px 60px;
+	overflow: auto;
+}
+.fenye li{
+	float: left;
+}
+.fenye :last-child{
+	float: right;
+}
+.fenye li:hover{
+	color: #878787;
+}

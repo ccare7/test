@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>产品分类</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <style>
+        .box{
+            width: 80%;
+            margin: 0 auto;
+        }
+        .tit{
+            font-size: 30px;
+            color: #0C0C0C;
+            font-weight: 600;
+            text-align: center;
+            margin: 20px auto;
+        }
+        #editForm{
+            display: none;
+            margin-top: 20px;
+            padding-right: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <p class="tit">关于我们</p>
+    <table class="layui-hide" id="demo"></table>
+    <script type="text/html" id="options">
+        <button type="button" class="layui-btn layui-btn-xs" onclick="edits({{d.cid}})"><i class="layui-icon"></i></button>
+        <button type="button" class="layui-btn layui-btn-xs layui-btn-danger"><i class="layui-icon" onclick="det({{d.cid}})"></i></button>
+    </script>
+</div>
+<form class="layui-form" action="" id="editForm">
+    <input type="hidden" name="cid" required  lay-verify="title" autocomplete="off" placeholder="请输入商品排序" class="layui-input">
+    <div class="layui-form-item">
+        <label class="layui-form-label">内容</label>
+        <div class="layui-input-block">
+            <textarea name="content" id="" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+
+
+    <div class="layui-input-block">
+        <button type="submit" class="layui-btn" lay-filter="demo1" lay-submit="" >提交</button>
+    </div>
+
+</form>
+</body>
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    var $;
+    var layer;
+    var form , table;
+    var index , delIndex;
+    layui.use(['table', 'jquery','layer','form'],function(){
+        table = layui.table;
+        layer=layui.layer;
+        $=layui.jquery;
+        form=layui.form;
+        //展示已知数据
+        table.render({
+            elem: '#demo'
+            ,url:"aboutus.php?type=querys"
+            ,cols: [[ // 标题栏
+                {field: 'cid', title: 'ID', sort: true}
+                ,{field: 'content', title: '内容'}
+                ,{title: '操作',templet:'#options'}
+            ]]
+            // ,skin: 'line' //表格风格
+            // ,even: true
+            ,page: true //是否显示分页
+            ,limits: [5, 10, 15]
+            ,limit: 5 //每页默认显示的数量
+        });
+        //修改数据
+        form.on('submit(demo1)',function (data) {
+            $.post("aboutus.php?type=edit",data.field,function (res) {
+                let data=JSON.parse(res);
+                if(data.code==200){
+                    layer.close(index);
+                    layer.msg(data.msg,{icon:6});
+                    table.reload('demo');
+                }else{
+                    layer.msg(data.msg,{icon:5})
+                }
+            });
+            return false;
+        })
+    });
+    //点击编辑按钮
+    function edits(cid) {
+        index=layer.open({
+            type:1,
+            title:'修改产品分类',
+            area:['400px','300px'],
+            skin:'layui-layer-molv',
+            content:$('#editForm'),
+        })
+        // console.log(tid);
+        $.get("aboutus.php?type=query",{cid:cid},function (res) {
+            var data=JSON.parse(res);
+            if(data.code==200){
+                $("input[name='cid']").val(data.data.cid);
+                $("textarea[name='content']").val(data.data.content);
+            }else{
+                layer.msg(data.msg);
+            }
+        })
+    }
+    //点击删除按钮
+    function det(cid) {
+        delIndex=layer.confirm('您确定要删除么？',{
+            title:'删除',
+            skin:'layui-layer-molv',
+            btn:['确认','取消']
+        },function () {
+            $.get("aboutus.php?type=delete",{cid:cid},function (res) {
+                let data=JSON.parse(res);
+                if(data.code==200){
+                    layer.close(delIndex);
+                    layer.msg(data.msg,{icon:1});
+                    table.reload('demo');
+                }else{
+                    layer.msg(data.msg,{icon:2})
+                }
+            })
+        },function () {
+            layer.close(delIndex);
+        })
+    }
+
+</script>

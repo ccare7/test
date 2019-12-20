@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>产品详情</title>
+			<link rel="stylesheet" type="text/css" href="../static/index/css/Prdo_xq.css" />
+			<link rel="stylesheet" type="text/css" href="../static/index/css/swiper.min.css" />
+		<style>
+			html,
+			body {
+				position: relative;
+				height: 100%;
+			}
+			body {
+				 
+				font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+				font-size: 14px;
+				color: #000;
+				margin: 0;
+				padding: 0;
+			}
+			
+			.swiper-container {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-slide {
+				text-align: center;
+				font-size: 18px;
+				background: #fff;
+				/* Center slide text vertically */
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--导航-->
+
+
+		<!--内容-->
+		<div class="tp_img"><img src="../static/index/img/15142787516637063ru.jpg" /></div>
+		<div class="con_fa_nk">
+			<p class="con_tit"><?php echo $data['gname'] ?></p>
+			<div class="con">
+				<div class="lb_prdo_fa">
+					<div class="lb_prod">
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide">
+									<img src="../static/index/img/aj_03.png"/>
+								</div>
+								<div class="swiper-slide">
+									<img src="../static/index/img/aj_03.png"/>
+								</div>
+								<div class="swiper-slide">
+									<img src="../static/index/img/aj_03.png"/>
+								</div>
+							</div>
+
+							<!-- Add Pagination -->
+							<div class="swiper-pagination"></div>
+							<!-- Add Arrows -->
+							<div class="swiper-button-next fenye1" ></div>
+							<div class="swiper-button-prev fenye"></div>
+						</div>
+					</div>
+				</div>
+				<div class="lb_right">
+					<p>市场价：￥<?php echo $data['original_price']?> </p>
+					<p>零售价：<strong style="color: #e40000; font-size: 26px;">￥<?php echo $data['discoun_price']?></strong></p>
+					<p>库存状况：<?php echo $data['stock']?>件</p>
+				</div>
+			</div>
+			<div class="xq_wenzi">
+				<p style="color: #3e3e3e; font-size: 22px; margin-bottom: 10px;"> 商品介绍</p>
+				<p>
+					<?php echo $data['content']?>
+				</p>
+			</div>
+		</div>
+		<!--返回顶部-->
+
+		<!--站点地图-->
+
+		<script src="../static/index/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var swiper = new Swiper('.swiper-container', {
+				pagination: '.swiper-pagination',
+				nextButton: '.swiper-button-next',
+				prevButton: '.swiper-button-prev',
+				paginationClickable: true,
+				spaceBetween: 30,
+				centeredSlides: true,
+				autoplay: 2500,
+				autoplayDisableOnInteraction: false
+			});
+		</script>
+		<script src="../static/index/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>	
+	<script src="../static/index/js/public.js" type="text/javascript" charset="utf-8"></script>
+	
+	</body>
+
+</html>

@@ -1,0 +1,46 @@
+<?php
+	$server=$mysqli->query("select * from service")->fetch_all(MYSQLI_ASSOC);
+?>
+<link rel="stylesheet" type="text/css" href="../static/index/css/fwxm.css" />
+
+
+	<body>
+		
+		<!--内容-->
+
+		<div class="con_fa_nk">
+			<div class="tp">
+				<img src="../static/index/img/15142755003828lrf8g.jpg" />
+			</div>
+
+			<div class="biaoti1">
+				<span class="us1">服务项目</span>
+				<span class="us2">Services</span>
+			</div>
+
+			<ul class="neirong">
+				<?php forEach($server as $v){ ?>
+
+				<li>
+					<div class="nr_img">
+						<img src="../static/index/img/15142755003828lrf8g.jpg" />
+					</div>
+					<p><?php echo $v['sname']?></p>
+					<img style="display: block; margin: 0 auto;" src="../static/index/img/fwxm2.png" />
+					<br />
+					<div class="nr_Wz">
+						<?php echo $v['content']?>
+					</div>
+				</li>
+				<?php } ?>
+			</ul>
+
+		</div>
+		<!--返回顶部-->
+
+<script src="../static/index/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>	
+	<script src="../static/index/js/public.js" type="text/javascript" charset="utf-8"></script>
+	
+	</body>
+
+</html>

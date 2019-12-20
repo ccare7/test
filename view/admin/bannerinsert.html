@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/admin/css/navinsert.css">
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <title>Document</title>
+    <style>
+        .layui-upload-img{
+            width: 160px;
+        }
+    </style>
+</head>
+<body>
+
+<form class="layui-form" action="">
+    <div class="head_tit">轮播图管理</div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">轮播图排序</label>
+        <div class="layui-input-block">
+
+            <input type="text" name="bsort" required  lay-verify="title" autocomplete="off" placeholder="请输产品名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">轮播图上传</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <input type="hidden" name="bthumb" value="">
+                <button type="button" class="layui-btn" id="test2">多图片上传</button>
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo2"></div>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-input-block">
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+    </div>
+</form>
+</body>
+
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    layui.use(['form','jquery','layer','upload'],function () {
+        var {form,$,layer,upload}=layui;
+        upload.render({
+            elem:'#test2',
+            url: 'upload.php',
+            multiple:true,
+            number:3,
+            done:function (res) {
+                // console.log(res)
+                if(res.code==200){
+                    layer.msg(res.msg);
+                    if($('#demo2 img').length<3){
+                        $("input[name='bthumb']").val((index,value)=>value+res.data+",");
+                        $("#demo2").append(`<img src="../${res.data}" style="width:160px;">`);
+                    }else{
+                        layer.msg('图片最多只能上传3张',{icon:2});
+                    }
+                }else{
+                    layer.msg(res.msg);
+                }
+            }
+        });
+
+        form.on('submit(demo1)',function (data) {
+            $.ajax({
+                type:'post',
+                url:"bannerinsert.php",
+                data:data.field,
+                dataType:"json",
+                success:function (res) {
+                    if(res==200){
+                        layer.msg(res.msg);
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                }
+            });
+        })
+
+    })
+</script>

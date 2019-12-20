@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="../static/index/img/logo.png" type="image/x-icon"/>
+    <title>NIKE</title>
+</head>
+<body>
+<div class="nav">
+    <div class="nav_neikuan">
+        <div class="nav_logo">
+            <img src="../static/index/img/logo.png" style="width: 165px; height: 52px;" />
+        </div>
+        <ul class="nav_tit">
+            <li>
+                <?php if(!isset($_GET['page_id'])) { ?>
+                      <a href="index.php" style="color: #fff;">首页</a>
+                <?php }else{ ?>
+                      <a href="index.php">首页</a>
+                <?php } ?>
+            </li>
+            <?php if(isset($_GET['page_id'])) { ?>
+                <?php foreach($nav as $n) { ?>
+                    <?php if($_GET['page_id']==$n['nid']) { ?>
+                        <li><a style="color: #fff;" href="navigator.php?page_id=<?php echo $n['nid']?>"><?php echo $n['name'] ?></a></li>
+                    <?php }else{ ?>
+                        <li><a href="navigator.php?page_id=<?php echo $n['nid']?>"><?php echo $n['name'] ?></a></li>
+                    <?php } ?>
+                <?php } ?>
+            <?php }else{ ?>
+                <?php foreach($nav as $n) { ?>
+                <li><a href="navigator.php?page_id=<?php echo $n['nid']?>"><?php echo $n['name'] ?></a></li>
+                <?php } ?>
+            <?php } ?>
+        </ul>
+    </div>
+</div>
+<div class="nav2">
+    <div class="nav_neikuan2">
+        <div class="nav_logo2">
+            <img src="../static/index/img/logo.png" style="width: 165px; height: 52px;" />
+        </div>
+        <ul class="nav_tit2">
+            <li>
+                <?php if(!isset($_GET['page_id'])) { ?>
+                    <a href="index.php" style="color: #fff;">首页</a>
+                <?php }else{ ?>
+                    <a href="index.php">首页</a>
+                <?php } ?>
+            </li>
+           
+            <?php foreach($nav as $n) { ?>
+                <?php if(isset($_GET['page_id']) && $_GET['page_id']==$n['nid'] ) { ?>
+                    <li><a style="color: #fff;" href="navigator.php?page_id=<?php echo $n['nid']?>"><?php echo $n['name'] ?></a></li>
+                <?php }else{ ?>
+                    <li><a href="navigator.php?page_id=<?php echo $n['nid']?>"><?php echo $n['name'] ?></a></li>
+                <?php } ?>
+
+            <?php } ?>
+        </ul>
+    </div>
+</div>
+<div class="fh_top">
+
+</div>

@@ -1,0 +1,143 @@
+<?php
+	//获取所有产品分类
+	$category=$mysqli->query("select * from category")->fetch_all(MYSQLI_ASSOC);
+	//将“全部分“添加到产品分类里面
+	$cate=[['cid'=>0,'cname'=>'全部','csort'=>999]];
+	$cate=array_merge($cate,$category);
+	//var_dump($cate);
+	//获取cate的长度
+	$count=count($cate);
+	//查询所有的商品
+	$goods=$mysqli->query("select gid,gname,gthumb from goods")->fetch_all(MYSQLI_ASSOC);
+	//var_dump($goods);
+	//将goods中查询出来的字段添加到count中
+	for($i=0;$i<$count;$i++){
+		$cid=$cate[$i]['cid'];
+		//var_dump($cid);
+		if($cid==0){
+			$cate[$i]['good']=$goods;
+			//var_dump($cate);
+			continue;
+		}
+		$good1=$mysqli->query("select gid,gname,gthumb from goods where cid=$cid")->fetch_all(MYSQLI_ASSOC);
+		$cate[$i]['good']=$good1;
+	}
+//var_dump($cate)
+?>
+
+		<link rel="stylesheet" type="text/css" href="../static/index/css/cpzx.css" />
+	<body>
+		<!--导航-->
+
+		<div class="fh_top">
+			
+		</div>
+		<!--内容-->
+
+		<div class="con_fa_nk">
+			<div class="tp">
+				<img src="../static/index/img/15142755003828lrf8g.jpg" />
+			</div>
+
+			<div class="biaoti1">
+				<span class="us1">产品中心</span>
+				<span class="us2">Products</span>
+			</div>
+
+			<ul class="con_list">
+				<?php foreach($cate as $v) { ?>
+					<li><?php echo $v['cname']?></li>
+				<?php }?>
+<!--				<li class="xxk">全部</li>-->
+<!--				<li>刹车油/制动液</li>-->
+<!--				<li>机油润滑油</li>-->
+<!--				<li>防冻冷却液</li>-->
+			</ul>
+			<div class="conBox">
+				<?php foreach($cate as $v) { ?>
+					<ul class="neirong">
+						<?php foreach($v['good'] as $g) { ?>
+							<li>
+								<div><a href="details.php?gid=<?php echo $g['gid'] ?>"><img src="..<?php echo $g['gthumb']?>" /></a></div>
+								<p><?php echo $g['gname']?></p>
+							</li>
+						<?php } ?>
+					</ul>
+				<?php }?>
+
+			</div>
+
+
+
+		</div>
+		<!--站点地图-->
+
+		<script type="text/javascript">
+			var conlist=document.querySelectorAll(".con_list>li");
+			var conest=document.querySelectorAll(".conBox>ul");
+			console.log(conlist);
+			console.log(conest);
+			conlist[0].className="xxk";
+			conest[0].style.display="block";
+			conlist.forEach(function(value,index){
+				value.onclick=function(){
+					conest.forEach((v,i)=>{
+						v.style.display="none"
+						conlist[i].className="";
+					});
+					conest[index].style.display="block";
+					conlist[index].className="xxk";
+				}
+			})
+			
+			
+			
+			
+			
+//			var oul = document.getElementsByClassName("con_list")[0];
+//			var oli=oul.getElementsByTagName("li");
+//			var one=document.getElementsByClassName("neirong")[0];
+//			var two=document.getElementsByClassName("nr_2")[0];
+//			var three=document.getElementsByClassName("nr_3")[0];
+//			var four=document.getElementsByClassName("nr_4")[0];
+//			console.log(one);
+//			console.log(two);
+//			console.log(three);
+//			console.log(four);
+//			for(var i=0;i<oli.length;i++){
+//				oli[i].index=i;
+//				oli[i].onclick=function(){
+//					for(k=0;k<oli.length;k++){
+//						oli[k].className=""
+//					}
+//					this.className='xxk';
+//					if(this.index==0){
+//						one.style.display='block'
+//						two.style.display='none'
+//						three.style.display='none'
+//						four.style.display='none';
+//					}else if(this.index==1){
+//						one.style.display='none'
+//						two.style.display='block'
+//						three.style.display='none'
+//						four.style.display='none';
+//					}else if(this.index==2){
+//						one.style.display='none'
+//						two.style.display='none'
+//						three.style.display='block'
+//						four.style.display='none';
+//					}else if(this.index==3){
+//						one.style.display='none'
+//						two.style.display='none'
+//						three.style.display='none'
+//						four.style.display='block';
+//					}
+//				}
+//			}
+		</script>
+	<script src="../static/index/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>	
+	<script src="../static/index/js/public.js" type="text/javascript" charset="utf-8"></script>
+
+	</body>
+	
+</html>

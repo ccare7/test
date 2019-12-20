@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!--    <link rel="stylesheet" href="../static/admin/css/navinsert.css">-->
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <title>Document</title>
+    <style>
+        .layui-upload-img{
+            width: 160px;
+        }
+        .fa{
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+<form class="layui-form" action="">
+    <div class="fa">
+    <div class="layui-form-item">
+        <label class="layui-form-label">关于我们</label>
+        <div class="layui-input-block">
+            <textarea id="textArea" name="content" style="display: none;"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-input-block">
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+    </div>
+    </div>
+</form>
+</body>
+
+</html>
+<script src="../static/layui/layui.js"></script>
+<script>
+    layui.use(['form','jquery','layer','layedit'],function () {
+        var {form,$,layer,layedit}=layui;
+        var index=layedit.build("textArea");
+        $.get('aboutus.php',{id:1},function (res) {
+            let data=JSON.parse(res);
+            layedit.setContent(index,data.content);
+        })
+        form.on('submit(demo1)',function (data) {
+            data.field.content=layedit.getContent(index);
+            console.log(data.field.connect);
+            $.post('aboutus.php',data.field,function (res) {
+               let data=JSON.parse(res);
+               if(data.code==200){
+                    layer.msg(data.msg)
+               }else{
+                   layer.msg(data.msg)
+               }
+           })
+        })
+
+    })
+</script>
